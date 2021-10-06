@@ -89,6 +89,77 @@ This linkage may seem like a strange feature of the language. The most common wa
 
 But a more natural way of applying prototypes is a pattern called "behavior delegation," where you intentionally design your linked objects to be able to *delegate* from one to the other for parts of the needed behavior.
 
+----
+
+All JavaScript objects inherit properties and methods from a prototype.
+
+```js
+function Person(first, last, age, eyecolor) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eyecolor;
+}
+
+const myFather = new Person("John", "Doe", 50, "blue");
+const myMother = new Person("Sally", "Rally", 48, "green");
+```
+
+We also learned that you can not add a new property to an existing object constructor:
+```js
+Person.nationality = "English";
+```
+
+To add a new property to a constructor, you must add it to the constructor function:
+```js
+function Person(first, last, age, eyecolor) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eyecolor;
+  this.nationality = "English";
+}
+```
+
+All JavaScript objects inherit properties and methods from a prototype:
+* `Date` objects inherit from `Date.prototype`
+* `Array` objects inherit from `Array.prototype`
+* `Person` objects inherit from `Person.prototype`
+
+The `Object.prototype` is on the top of the prototype inheritance chain:
+
+`Date` objects, `Array` objects, and `Person` objects inherit from `Object.prototype`.
+
+The JavaScript `prototype` property allows you to add new properties to object constructors:
+
+```js
+function Person(first, last, age, eyecolor) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eyecolor;
+}
+
+Person.prototype.nationality = "English";
+```
+
+The JavaScript `prototype` property also allows you to add new methods to objects constructors:
+
+```js
+function Person(first, last, age, eyecolor) {
+  this.firstName = first;
+  this.lastName = last;
+  this.age = age;
+  this.eyeColor = eyecolor;
+}
+
+Person.prototype.name = function() {
+  return this.firstName + " " + this.lastName;
+};
+```
+
+
+
 ## Resources:
 * https://www.w3schools.com
 * You don't know JS from Kyle Simpson
