@@ -9,6 +9,8 @@
         - [Difference between null and undefined](#difference-between-null-and-undefined)
         - [Equality](#equality)
         - [Inequality](#inequality)
+* [Scope](#scope)
+  1. [Compiler Theory](#compiler-theory)
 * [Variables](#variables)
     1. [Scoping Levels](#scoping-levels)
         - [Function Scopes](#function-scopes)
@@ -225,6 +227,42 @@ b < c;		// true
 ```
 
 What happens here? In section 11.8.5 of the ES5 specification, it says that if both values in the `<` comparison are strings, as it is with `b < c`, the comparison is made lexicographically (aka alphabetically like a dictionary). But if one or both is not a string, as it is with `a < b`, then both values are coerced to be numbers, and a typical numeric comparison occurs.
+
+## Scope
+
+One of the most fundamental paradigms of nearly all programming languages is the ability to store values in variables, and later retrieve or modify those values. In fact, the ability to store values and pull values out of variables is what gives a program state.
+
+Without such a concept, a program could perform some tasks, but they would be extremely limited and not terribly interesting.
+
+But the inclusion of variables into our program begets the most interesting questions we will now address: <ins>where do those variables live?</ins> In other words, <ins>where are they stored?</ins> And, most importantly, <ins>how does our program find them when it needs them?</ins>
+
+These questions speak to the need for a well-defined set of rules for storing variables in some location, and for finding those variables at a later time. We'll call that set of rules: Scope.
+
+But, where and how do these Scope rules get set?
+
+### Compiler Theory
+
+In a traditional compiled-language process, a chunk of source code, your program, will undergo typically three steps before it is executed, roughly called "compilation":
+
+1. **Tokenizing/Lexing:** breaking up a string of characters into meaningful (to the language) chunks, called tokens. For instance, consider the program: `var a = 2;`. This program would likely be broken up into the following tokens: `var`, `a`, `=`, `2`, and `;`. Whitespace may or may not be persisted as a token, depending on whether it's meaningful or not.
+
+2. **Parsing:** taking a stream (array) of tokens and turning it into a tree of nested elements, which collectively represent the grammatical structure of the program. This tree is called an "AST" (<b>A</b>bstract <b>S</b>yntax <b>T</b>ree).
+
+    The tree for `var a = 2;` might start with a top-level node called `VariableDeclaration`, with a child node called `Identifier` (whose value is `a`), and another child called `AssignmentExpression` which itself has a child called `NumericLiteral` (whose value is `2`).
+
+3. **Code-Generation:** the process of taking an AST and turning it into executable code. This part varies greatly depending on the language, the platform it's targeting, etc.
+
+    So, rather than get mired in details, we'll just handwave and say that there's a way to take our above described AST for `var a = 2;` and turn it into a set of machine instructions to actually *create* a variable called `a` (including reserving memory, etc.), and then store a value into `a`.
+
+The JavaScript engine is vastly more complex than just those three steps, as are most other language compilers. For instance, in the process of parsing and code-generation, there are certainly steps to optimize the performance of the execution, including collapsing redundant elements, etc.
+
+For one thing, JavaScript engines don't get the luxury (like other language compilers) of having plenty of time to optimize, because JavaScript compilation doesn't happen in a build step ahead of time, as with other languages.
+
+For JavaScript, the compilation that occurs happens, in many cases, mere microseconds (or less!) before the code is executed. To ensure the fastest performance, JS engines use all kinds of tricks (like JITs, which lazy compile and even hot re-compile, etc.) 
+
+Let's just say, for simplicity's sake, that any snippet of JavaScript has to be compiled before (usually right before!) it's executed. So, the JS compiler will take the program `var a = 2;` and compile it first, and then be ready to execute it, usually right away.
+
+For more details click [here](https://github.com/jumaschion/You-Dont-Know-JS-1/blob/master/scope%20%26%20closures/ch1.md#understanding-scope) to read you don't know JS Understanding Scope.
 
 ## Variables
 
