@@ -3,6 +3,7 @@
 ## Table of contents
 * [this](#this)
 * [Prototypes](#prototypes)
+* [Resources](#resources)
 
 ## this
 
