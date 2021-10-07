@@ -1,4 +1,4 @@
-# Strings and Numbers
+# Strings
 
 ## Table of contents
 * [Strings](#strings)
@@ -29,6 +29,7 @@
       - [startsWith](#startswith)
       - [endsWith](#endswith)
   - [Template Literals](#template-literals)
+* [Resources](#resources)
 
 ## Strings
 
