@@ -16,18 +16,18 @@
     - [The trim Method](#the-trim-method)
     - [Padding](#padding)
     - [Extracting String Characters](#extracting-string-characters)
-      - [charAt Method](#charAt-method)
-      - [charCodeAt Method](#charCodeAt-method)
+      - [charAt Method](#charat-method)
+      - [charCodeAt Method](#charcodeat-method)
       - [Property Access](#property-access)
     - [Converting a String to an Array](#converting-a-string-to-an-array)
     - [String Search](#string-search)
-      - [indexOf()](#indexOf())
-      - [lastIndexOf()](#lastIndexOf())
-      - [search()](#search())
-      - [match()](#match())
-      - [includes()](#includes())
-      - [startsWith()](#startsWith())
-      - [endsWith()](#endsWith())
+      - [indexOf](#indexof)
+      - [lastIndexOf](#lastindexof)
+      - [search](#search)
+      - [match](#match)
+      - [includes](#includes)
+      - [startsWith](#startswith)
+      - [endsWith](#endswith)
   - [Template Literals](#template-literals)
 
 ## Strings
@@ -240,7 +240,7 @@ text = "Hello".concat(" ", "World!");
 <ins>All string methods return a new string. They don't modify the original string.
 Formally said: Strings are immutable: Strings cannot be changed, only replaced.</ins>
 
-### The trim method
+### The trim Method
 
 The `trim()` method removes whitespace from both sides of a string:
 
@@ -354,7 +354,7 @@ JavaScript methods for searching strings:
 * `String.startsWith()`
 * `String.endsWith()`
 
-#### indexOf()
+#### indexOf
 
 The `indexOf()` method returns the index of (the position of) the first occurrence of a specified text in a string:
 
@@ -363,7 +363,7 @@ let str = "Please locate where 'locate' occurs!";
 str.indexOf("locate")    // Returns 7
 ```
 
-#### lastIndexOf()
+#### lastIndexOf
 
 The `lastIndexOf()` method returns the index of the last occurrence of a specified text in a string:
 
@@ -393,7 +393,7 @@ let str = "Please locate where 'locate' occurs!";
 str.lastIndexOf("locate", 15)    // Returns 7
 ```
 
-#### search()
+#### search
 
 The `search()` method searches a string for a specified value and returns the position of the match:
 
@@ -407,7 +407,7 @@ The two methods, `indexOf()` and `search()`, look like equal. But they are not. 
 * The `search()` method cannot take a second start position argument.
 * The `indexOf()` method cannot take powerful search values (regular expressions).
 
-#### match()
+#### match
 
 The `match()` method searches a string for a match against a regular expression, and returns the matches, as an Array object.
 
@@ -423,7 +423,7 @@ let text = "The rain in SPAIN stays mainly in the plain";
 text.match(/ain/gi)   // Returns an array [ain,AIN,ain,ain]
 ```
 
-#### includes()
+#### includes
 
 The `includes()` method returns true if a string contains a specified value.
 
@@ -439,7 +439,7 @@ let text = "Hello world, welcome to the universe.";
 text.includes("world", 12)    // Returns false
 ```
 
-#### startsWith()
+#### startsWith
 
 The `startsWith()` method returns `true` if a string begins with a specified value, otherwise `false`:
 
@@ -461,7 +461,7 @@ text.startsWith("world", 6)    // Returns true
 
 Note: The `startsWith()` method is case sensitive.
 
-#### endsWith()
+#### endsWith
 
 The `endsWith()` method returns `true` if a string ends with a specified value, otherwise `false`:
 
