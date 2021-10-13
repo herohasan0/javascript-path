@@ -263,6 +263,102 @@ How this code works:
 3. When we call `plusOne(3)`, it adds `3` (its inner `y`) to the `1` (remembered by `x`), and we get `4` as the result.
 4. When we call `plusTen(13)`, it adds `13` (its inner `y`) to the `10` (remembered by `x`), and we get `23` as the result.
 
+---
+
+Closures, this is a function that turn other functions into functions that are gonna run once. If they run them again they don't work. 
+
+We can achieve memoization, a core performance optimizer. That's going to enable us to not repeat tasks, not repeat calculations that take a long time if we have done them before. 
+
+Every time a function gets executed (or run, or invoke) it creates a brand new local memory. Remember the execution context and local memory. When we finish running that function, that's all deleted. We run the function again, it doesn't remembet the previous runnig, the data stored in the previous running function. 
+
+- When our functions get called, we create a live store of data (local memory/variable environment/state) for that function’s execution context.
+- When the function finishes executing, its local memory is deleted (except the returned value)
+- But what if our functions could hold on to live data between executions? 
+- This would let our function definitions have an associated cache/persistent memory
+- But it all starts with us returning a function from another function
+
+**Example**
+
+```js
+function createFunction() {
+   function multiplyBy2 (num){
+       return num*2;
+   }
+   return multiplyBy2;
+}
+const generatedFunc = createFunction();
+const result = generatedFunc(3); // 6
+```
+
+<img src="fig1.PNG">
+
+**Example**
+
+```js
+function outer (){
+   let counter = 0;
+   function incrementCounter (){ counter ++; }
+   return incrementCounter;
+}
+const myNewFunction = outer();
+myNewFunction();
+myNewFunction();
+```
+
+<img src="fig2.PNG">
+
+When `incrementCounter` returned out, there is something else with that function. The function took with it all the surrounding data from where that function was saved, where is was born, where it was stored. It grabbed it's surrounding data and brought it out. 
+
+JavaScript scope rule is what's called lexical or static scoping. Where I save my function determines for the life of that function what data it will have access to when that function runs.
+
+JavaScript is a static or lexically scoped language. Lexical means the physical positioning on the page. 
+
+**The bond** When a function is defined, it gets a bond to the surrounding Local Memory (“Variable Environment”) in which it has been defined. 
+
+**The ‘backpack’** 
+
+- We return `incrementCounter`’s code (function definition) out of `outer` into global and give it a new name - `myNewFunction`
+- We maintain the bond to `outer`’s live local memory - it gets ‘returned out’ attached on the back of `incrementCounter`’s function definition.
+- So `outer`’s local memory is now stored attached to `myNewFunction` - even though `outer`’s execution context is long gone
+- When we run `myNewFunction` in global, it will first look in its own local memory first (as we’d expect), but then in `myNewFunction`’s ‘backpack’
+
+**What can we call this ‘backpack’?**
+
+- Closed over ‘Variable Environment’ (C.O.V.E.)
+- Persistent Lexical Scope Referenced Data (P.L.S.R.D.) - ‘Backpack’
+- ‘Closure’
+
+The ‘backpack’ (or ‘closure’) of live data is attached `incrementCounter` (then to `myNewFunction`) through a hidden property known as `[[scope]]` which persists when the inner function is returned out.
+
+Think about this function:
+
+```js
+function outer (){
+   let counter = 0;
+   function incrementCounter (){
+	counter ++; 
+   }
+   return incrementCounter;
+}
+
+const myNewFunction = outer();
+myNewFunction();
+myNewFunction();
+
+const anotherFunction = outer();
+anotherFunction();
+anotherFunction();
+```
+
+**Individual backpacks** If we run `outer` again and store the returned `incrementCounter` function definition in `anotherFunction`, this new `incrementCounter` function was created in a new execution context and therefore has a brand new independent backpack.
+
+**Closure gives our functions persistent memories and entirely new toolkit for writing professional code**
+
+- **Helper functions:** Everyday professional helper functions like ‘once’ and ‘memoize’.
+- **Iterators and generators:** Which use lexical scoping and closure to achieve the most contemporary patterns for handling data in JavaScript.
+- **Module pattern:** Preserve state for the life of an application without polluting the global namespace.
+- **Asynchronous JavaScript:** Callbacks and Promises rely on closure to persist state in an asynchronous environment.
+
 ### Modules
 
 The most common usage of closure in JavaScript is the module pattern. Modules let you define private implementation details (variables, functions) that are hidden from the outside world, as well as a public API that is accessible from the outside.
